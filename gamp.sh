@@ -15,14 +15,12 @@ echo "GAMP : UPGRADE UBUNTU 18.04"
 sudo apt upgrade -y
 
 echo "############"
-echo "# GAMP 1/5 #";
+echo "# GAMP 1/6 #";
 echo "############"
 
 echo "GAMP : INSTALL & CONFIG GIT"
 
 sudo apt install git -y
-
-# CONFIGURE GIT ?
 
 read -p 'Git username : ' gitname
 git config --global user.name $gitname
@@ -36,7 +34,7 @@ git config --global merge.conflictstyle diff3
 echo "GIT OK..."
 
 echo "############"
-echo "# GAMP 2/5 #";
+echo "# GAMP 2/6 #";
 echo "############"
 
 echo "GAMP : INSTALL APACHE2"
@@ -47,7 +45,7 @@ sudo service apache2 restart
 echo "APACHE2 OK..."
 
 echo "############"
-echo "# GAMP 3/5 #";
+echo "# GAMP 3/6 #";
 echo "############"
 
 echo "GAMP : INSTALL SSH"
@@ -57,7 +55,7 @@ sudo apt install ssh
 echo "SSH OK..."
 
 echo "############"
-echo "# GAMP 4/5 #";
+echo "# GAMP 4/6 #";
 echo "############"
 
 echo "PHP INSTALL"
@@ -72,7 +70,7 @@ sudo apt install php$phpversion php$phpversion-{common,mysql,xml,xmlrpc,curl,gd,
 echo "PHP $phpversion OK..." 
 
 echo "############"
-echo "# GAMP 5/5 #";
+echo "# GAMP 5/6 #";
 echo "############"
 
 echo "MYSQL INSTALL"
@@ -84,7 +82,7 @@ echo "MYSQL OK..."
 echo "THINK TO RECONFIGURE THE PASSWORD ROOT"
 
 echo "############"
-echo "# GAMP 5/5 #";
+echo "# GAMP 6/6 #";
 echo "############"
 
 echo "PHPMYADMIN INSTALL"
@@ -98,5 +96,5 @@ sudo chown -R www-data:www-data /usr/share/phpmyadmin
 echo "PHPMYADMIN OK..."
 
 echo "############"
-echo "# GAMP 5/5 #";
+echo "# GAMP 7/5 #";
 echo "############"
