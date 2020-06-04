@@ -92,6 +92,7 @@ wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-english.tar.xz
 sudo find /usr/share/phpmyadmin -mindepth 1 -delete
 sudo tar xf phpMyAdmin-latest-english.tar.xz --strip 1 -C /usr/share/phpmyadmin
 sudo chown -R www-data:www-data /usr/share/phpmyadmin
+sudo rm -r phpMyAdmin-latest-english.tar.xz
 
 echo "PHPMYADMIN OK..."
 
