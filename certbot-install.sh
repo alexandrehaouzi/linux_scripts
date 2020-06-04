@@ -13,9 +13,10 @@ echo "ADD APT"
 sudo add-apt-repository universe
 sudo add-apt-repository ppa:certbot/certbot
 
-echo "UPDATE"
+echo "UPDATE & INSTALL CERTBOT"
 
 sudo apt-get update
+sudo apt-get install certbot python3-certbot-apache
 
 echo "INSTALL CERTBOT"
 
