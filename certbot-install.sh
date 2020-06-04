@@ -19,7 +19,6 @@ sudo apt-get update
 
 echo "INSTALL CERTBOT"
 
-sudo apt-get install certbot python3-certbot-apache
 sudo certbot --apache
 
 echo "INSTALL CERTBOT OK"

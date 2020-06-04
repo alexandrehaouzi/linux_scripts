@@ -2,26 +2,6 @@
 
 # REQUIRED: Ubuntu 18.04
 
-echo "############"
-echo "# GAMP 0/6 #";
-echo "############"
-
-echo "GAMP : UPDATE UBUNTU 18.04"
-
-sudo apt update
-
-echo "GAMP : UPGRADE UBUNTU 18.04"
-
-sudo apt upgrade -y
-
-echo "############"
-echo "# GAMP 1/6 #";
-echo "############"
-
-echo "GAMP : INSTALL & CONFIG GIT"
-
-sudo apt install git -y
-
 read -p 'Git username : ' gitname
 git config --global user.name $gitname
 
