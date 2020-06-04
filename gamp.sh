@@ -3,7 +3,7 @@
 # REQUIRED: Ubuntu 18.04
 
 echo "############"
-echo "# GAMP 0/5 #";
+echo "# GAMP 0/6 #";
 echo "############"
 
 echo "GAMP : UPDATE UBUNTU 18.04"
@@ -95,6 +95,4 @@ sudo chown -R www-data:www-data /usr/share/phpmyadmin
 
 echo "PHPMYADMIN OK..."
 
-echo "############"
-echo "# GAMP 7/5 #";
-echo "############"
+echo "END GAMP.SH, CIAO!!"
