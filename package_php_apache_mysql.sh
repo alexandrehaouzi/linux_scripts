@@ -1,102 +1,157 @@
 #!/bin/bash
 
+# By @lx
 # REQUIRED: Ubuntu 20.04
+# git configuration
+# apache2 installation & configuration
+# ssh installation
+# php & modules installation
+# composer installation
+# mysql installation
+# phpmyadmin installation
+# yarn installation
 
-# Vars 
-RED = `tput setaf 1`
-GREEN = `tput setaf 2`
-NC = `tput sgr0`
+echo "# GIT"
 
-echo "#############"
-echo "# GIT - 1/5 #"
-echo "#############"
-echo -e "/r/n/r/n"
+read -p "Configure git ? (Y/n)" choice_git
 
-read -p 'Git username : ' gitname
-git config --global user.name $gitname
+case "$choice_git" in
+	n|N )
+		echo "Skip git configuration";;
+	* )
+		read -p 'Git username : ' gitname
+		git config --global user.name $gitname
+		read -p 'Git user email : ' gitemail
+		git config --global user.email $gitemail
+		git config --global color.ui auto
+		echo "Git color.ui is OK ✔"
+		git config --global merge.conflictstyle diff3
+		echo "Git merge.conflictstyle is OK ✔"
+		echo "Git check ✔";;
+esac
 
-read -p 'Git user email : ' gitemail
-git config --global user.email $gitemail
+###############################
 
-git config --global color.ui auto
-echo -e "Git color.ui is OK ${GREEN}✔${NC} /r/n"
+echo "# APACHE2"
 
-git config --global merge.conflictstyle diff3
-echo -e "Git merge.conflictstyle is OK ${GREEN}✔${NC} /r/n"
-echo -e "Git is configured now ${GREEN}✔${NC} /r/n"
-echo -e "/r/n/r/n"
+read -p "Install & run Apache2 ? (Y/n)" choice_apache2
 
-echo "#################"
-echo "# APACHE2 - 2/5 #"
-echo "#################"
+case "$choice_apache2" in
+	n|N )
+		echo "Skip Apache2 installation & configuration";;
+	* )
+		sudo apt install apache2 -y
+		echo "Apache2 is installed ✔"
+		sudo service apache2 restart
+		echo "Apache2 check ✔";;
+esac
 
-echo -e "/r/n/r/n"
+###############################
 
-sudo apt install apache2 -y
-echo -e "Apache2 is now installed ${GREEN}✔${NC} /r/n"
+echo "# SSH"
 
-sudo service apache2 restart
-echo -e "Apache2 is now running ${GREEN}✔${NC} /r/n"
+read -p "Install SSH module ? (Y/n)" choice_ssh
 
-echo "#############"
-echo "# PHP - 3/5 #";
-echo "############""
+case "$choice_ssh" in 
+	n|N )
+		echo "Skip ssh installion";;
+	* )
+		sudo apt install ssh
+		echo -e "SSH check ✔"
+esac
 
-echo -e "/r/n/r/n"
+###############################
 
-sudo apt install ssh
-echo -e "SSH is now installed ${GREEN}✔${NC} /r/n"
+echo "# PHP"
 
-sudo apt install software-properties-common
-sudo add-apt-repository ppa:ondrej/php
+read -p "Install PHP & modules ? (Y/n)" php_choice
 
-echo -e "Add repository apt ➝ ppa:ondrej/php /r/n"
+case "$php_choice" in
+	n|N )
+		echo "Skip PHP & PHP modules installation";;
+	* )
+		sudo apt install software-properties-common
+		sudo add-apt-repository ppa:ondrej/php -y
+		echo "Add repository apt ➝ ppa:ondrej/php"
+		sudo apt update
+		read -p 'What version of php do yoy want to install ? (example : 7.4) : ' phpversion
+		sudo apt install php$phpversion php$phpversion-{common,mysql,xml,xmlrpc,curl,gd,cli,dev,mbstring,intl,zip,gmp,bcmath} libapache2-mod-php$phpversion -y
+		echo "PHP $phpversion check ✔"
+esac
 
-sudo apt-update
+###############################
 
-echo "Aptitude is update ${GREEN}✔${NC} /r/n"
+echo "# Composer"
 
-read -p 'What version of php do yoy want to install ? (example : ${GREEN}7.4${NC}) : ' phpversion
-sudo apt install php$phpversion php$phpversion-{common,mysql,xml,xmlrpc,curl,gd,cli,dev,mbstring,intl,zip,gmp,bcmath,gettext} libapache2-mod-php$phpversion -y
-echo -e "PHP $phpversion is now installed ${GREEN}✔${NC} /r/n"
-echo -e "Modules installed : /r/n"
-echo -e "php$phpversion-common ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-mysql ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-xml ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-xmlrcp ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-curl ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-gd ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-cli ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-dev ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-mbstring ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-intl ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-zip ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-gmp ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-bcmath ${GREEN}✔${NC} /r/n"
-echo -e "php$phpversion-gettext ${GREEN}✔${NC} /r/n"
-echo -e "libapache2-mod-php$phpversion ${GREEN}✔${NC} /r/n"
+read -p "Install composer ? (Y/n)" composer_choice
 
-echo "###############"
-echo "# mysql - 4/5 #";
-echo "###############"
+case "$composer_choice" in
+	n|N )
+		echo "Skip composer installation";;
+	* )
+		php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+		sudo php composer-setup.php --install-dir=/bin --filename=composer
+		php -r "unlink(composer-setup.php)"
+		echo "Composer check ✔";;
+esac
 
-echo -e "/r/n/r/n"
 
-sudo apt install mysql-server -y
-echo -e "mysql-server is now installed ${GREEN}✔${NC} /r/n"
-sudo mysql_secure_installation
+echo "#Symfony"
 
-echo -e "script mysql_secure_installation is executed ${GREEN}✔${NC} /r/n"
+read -p "Install symfony ? (Y/n)" symfony_choice
 
-echo -e "${RED}/!\ DO NOT FORGET TO UPDATE MYSQL PASSWORD ROOT /!\${NC}"
+case "$symfony_choice" in
+	n|N )
+		echo "Skip symfony";;
+	* )
+		wget https://get.symfony.com/cli/installer -O - | bash
+		symfony -v
+		echo "Composer check ✔";;
+esac
 
-echo "####################"
-echo "# phpmyadmin - 6/5 #";
-echo "####################"
+###############################
 
-echo -e "/r/n/r/n"
+echo "# MySQL"
 
-sudo apt install phpmyadmin -y
-echo -e "phpmyadmin is configured now ${GREEN}✔${NC} /r/n"
+read -p "Install & configure MySQL ? (Y/n)" mysql_choice
 
-echo "My job is done now."
+case "$mysql_choice" in
+	n/N )
+		echo "Skip MySQL";;
+	* )
+		sudo apt install mysql-server -y
+		sudo mysql_secure_installation
+		echo "MySQL check ✔";;
+esac
+
+###############################
+
+echo "# PHPMyadmin"
+
+read -p "Install PHPMyadmin ? (Y/n)" phpmyadmin_choice
+
+case "$phpmyadmin_choice" in
+	n|N )
+		echo "Skip phpmyadmin";;
+	* )
+		sudo apt install phpmyadmin -y
+		echo "PHPMyadmin check ✔";;
+esac
+
+###############################
+
+echo "# Yarn"
+
+read -p "Install Yarn ? (Y/n)" yarn_choice
+
+case "$yarn_choice" in
+	n|N )
+		echo "Skip Yarn";;
+	* )
+		curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+		echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+		export "NODE_OPTIONS=--max_old_space_size=4096"
+		sudo apt update
+		sudo apt install yarn -y
+		echo "Yarn check ✔";;
+esac
