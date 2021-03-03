@@ -52,7 +52,7 @@ echo "# SSH"
 
 read -p "Install SSH module ? (Y/n)" choice_ssh
 
-case "$choice_ssh" in 
+case "$choice_ssh" in
 	n|N )
 		echo "Skip ssh installion";;
 	* )
@@ -74,7 +74,7 @@ case "$php_choice" in
 		sudo add-apt-repository ppa:ondrej/php -y
 		echo "Add repository apt ➝ ppa:ondrej/php"
 		sudo apt update
-		read -p 'What version of php do yoy want to install ? (example : 7.4) : ' phpversion
+		read -p 'What version of php do you want to install ? (example : 7.4) : ' phpversion
 		sudo apt install php$phpversion php$phpversion-{common,mysql,xml,xmlrpc,curl,gd,cli,dev,mbstring,intl,zip,gmp,bcmath} libapache2-mod-php$phpversion -y
 		echo "PHP $phpversion check ✔"
 esac
@@ -91,10 +91,11 @@ case "$composer_choice" in
 	* )
 		php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 		sudo php composer-setup.php --install-dir=/bin --filename=composer
-		php -r "unlink(composer-setup.php)"
+		#php -r "unlink('composer-setup.php')"
 		echo "Composer check ✔";;
 esac
 
+###############################
 
 echo "#Symfony"
 
@@ -105,8 +106,8 @@ case "$symfony_choice" in
 		echo "Skip symfony";;
 	* )
 		wget https://get.symfony.com/cli/installer -O - | bash
-		symfony -v
-		echo "Composer check ✔";;
+		sudo mv /home/$USER/.symfony/bin/symfony /usr/local/bin/symfony
+		echo "Symfony check ✔";;
 esac
 
 ###############################
